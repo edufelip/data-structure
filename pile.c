@@ -33,6 +33,16 @@ char pile_pop(Pile* pile) {
   return value;
 }
 
+void pile_free(Pile* pile) {
+  Element* delete= pile->first;
+  while (sup != NULL) {
+    Element* sup = delete;
+    free(delete);
+    delete = sup->next;
+  }
+  free(pile);
+}
+
 int calculate_pos(char * e) {
   int i;
   Pile* pile;
