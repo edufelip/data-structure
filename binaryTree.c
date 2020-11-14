@@ -55,3 +55,11 @@ void tree_print_simetric(Tree* tree) {
     tree_print_simetric(tree->right);
   }
 }
+
+void tree_print_pos(Tree* tree) {
+  if(tree != NULL) {
+    tree_print_pos(tree->left);
+    tree_print_pos(tree->right);
+    printf("%c", tree->info);
+  }
+}
