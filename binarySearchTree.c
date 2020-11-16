@@ -46,6 +46,54 @@ void bst_print(Bst* bst) {
   }
 }
 
+int bst_count(Bst* bst) {
+  int count = 1;
+  if(bst->left != NULL) {
+    count += bst_count(bst->left);
+  }
+  if(bst->right != NULL) {
+    count += bst_count(bst->right);
+  }
+  return count;
+}
+
+void bst_balance(Bst* bst) {
+  int left = bst_count(bst->left);
+  int right = bst_count(bst->right);
+  while(left > right + 2 || right > left + 2) {
+    if(left > right + 2) {
+      Bst* sup = bst;
+      while(sup->left != NULL) {
+        sup = sup->left;
+      }
+      int value = sup->value;
+      free(sup);
+      Bst* a = (Bst*)malloc(sizeof(Bst));
+      a->info = bst->info;
+      a->right = bst->right;
+      a->left = NULL;
+      bst->right = a;
+      bst->value = value;
+    }
+    if(right > left + 2) {
+      Bst* sup = bst;
+      while(sup->right != NULL) {
+        sup = sup->right;
+      }
+      int value = sup->value;
+      free(sup);
+      Bst* a = (Bst*)malloc(sizeof(Bst));
+      a->info = bst->info;
+      a->left = bst->left;
+      a->right = NULL;
+      bst->left = a;
+      bst->value = value;
+    }
+    left = bst_count(bst->left);
+    right = bst_count(bst->right);
+  }
+}
+
 Bst* bst_search(Bst* bst, int value) {
   if(bst == NULL) return NULL;
   if(bst->info > value) return bst_search (bst->left, value);
@@ -55,7 +103,7 @@ Bst* bst_search(Bst* bst, int value) {
 
 Bst* bst_insert(Bst* bst, int value) {
   if (bst == NULL) {
-    a = (Bst*)malloc(sizeof(Bst));
+    Bst* a = (Bst*)malloc(sizeof(Bst));
     a->info = value;
     a->left = NULL;
     a->right = NULL;
