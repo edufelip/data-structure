@@ -48,3 +48,12 @@ void ntree_free(Ntree* tree) {
   }
   free(tree);
 }
+
+int max(int a, int b) {
+  return (a > b) ? a : b;
+}
+
+int ntree_height(Ntree* tree) {
+  if (tree == NULL) return -1;
+  return max(1 + ntree_height(tree->child), ntree_height(tree->brother));
+}
