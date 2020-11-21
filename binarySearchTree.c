@@ -94,6 +94,24 @@ void bst_balance(Bst* bst) {
   }
 }
 
+void bst_balance_rotate(bst* bst) {
+  int left = bst_count(bst->left);
+  int right = bst_count(bst->right);
+  if(left > right + 2 || right > left + 2) {
+    if (left > right + 2) {
+      Bst * sup = bst;
+      bst = bst->left;
+      sup->left = bst->right;
+      bst->right = sup;
+    } else if (right > left + 2) {
+      Bst* sup = bst;
+      bst = bst->right;
+      sup->right = bst->left;
+      bst->left = sup;
+    }
+  }
+}
+
 Bst* bst_search(Bst* bst, int value) {
   if(bst == NULL) return NULL;
   if(bst->info > value) return bst_search (bst->left, value);
