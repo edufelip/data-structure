@@ -20,6 +20,10 @@ Tree* tree_create(char c, Tree* l, Tree* r) {
   return p;
 }
 
+int tree_isEmpty(Tree* tree) {
+  return tree == NULL;
+}
+
 Tree* tree_free(Tree* tree) {
   if(!tree_isEmpty(tree)) {
     tree_free(tree->left);
@@ -27,10 +31,6 @@ Tree* tree_free(Tree* tree) {
     free(tree);
   }
   return NULL;
-}
-
-int tree_isEmpty(Tree* tree) {
-  return tree == NULL;
 }
 
 int tree_belongs(Tree* tree, char c) {
